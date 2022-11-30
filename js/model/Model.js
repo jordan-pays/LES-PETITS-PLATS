@@ -25,10 +25,19 @@ class Model {
 
     getIngredientsFilter(ingredients,str) {
         if(str!=undefined){
-            const filterIngredienst = ingredients.filter((ingredient)=>ingredient.includes(str.toLowerCase()))
-            return filterIngredienst
+            const filterIngredient = ingredients.filter((ingredient)=>ingredient.includes(str.toLowerCase()))
+            return filterIngredient
         }else{
             return ingredients
+        }
+    }
+
+    getAppareilsFilter(appareils,str){
+        if(str!=undefined){
+            const filterAppareils = appareils.filter((appareil)=>appareil.includes(str.toLowerCase()))
+            return filterAppareils
+        }else{
+            return appareils
         }
     }
 
@@ -46,6 +55,17 @@ class Model {
         return data
     }
 
+    getAllAppareils(recipes){
+        const arr = [];
+        recipes.forEach(recipe=>{
+            arr.push(recipe.appliance)
+        });
+        const data = arr.filter((appareils, index) => arr.indexOf(appareils) === index);
+        data.sort((a, b) => {
+            return a.localeCompare(b);
+        })
+        return data
+    }
 
     filterFunction(recipe, str) {
         if (recipe.name.toLowerCase().includes(str.toLowerCase())) {

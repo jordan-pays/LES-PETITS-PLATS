@@ -28,7 +28,8 @@ height: 50%;
 .container_button {
     display: flex;
     align-items: center;
-    gap: 20px
+    gap: 20px;
+    flex: 1;
 }
 
 .button_filter:active, .button_filter:focus, .button_filter:hover,.badge:hover {
@@ -57,7 +58,10 @@ height: 50%;
 
 .green {
   background-color: #68D9A4;
-  ;
+}
+
+.red {
+background-color: #ED6454;
 }
 
 .relative {

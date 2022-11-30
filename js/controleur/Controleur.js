@@ -5,6 +5,8 @@ class Controleur {
         this.arrayRecipeFilters = null;
         this.arrayIngredients = null;
         this.arrayIngredientsFilters = null;
+        this.arrayAppareils = null;
+        this.arrayAppareilsFilters = null;
         this.arrayBadge = [];
         this.model = new Model()
         this.view = new View()
@@ -17,15 +19,19 @@ class Controleur {
 
         this.view.DisplayRecipes(data)
         this.ControlAllIngredients()
+        this.ControlAllAppareils()
         this.AddEventListenerForIngredients();
+        this.AddEventListenerForAppareils()
     }
 
-    async ControllSearchFilter(str) {
+    async ControlSearchFilter(str) {
         const data = await this.model.getSearchFilter(this.arrayRecipeFilters, str)
         this.arrayRecipeFilters = data;
         this.view.DisplayRecipes(data)
         this.ControlAllIngredients()
+        this.ControlAllAppareils()
         this.AddEventListenerForIngredients();
+        this.AddEventListenerForAppareils()
     }
 
     ControlAllIngredients() {
@@ -42,10 +48,39 @@ class Controleur {
         this.view.DisplayIngredients(data);
     }
 
+    ControlAllAppareils() {
+        const data = this.model.getAllAppareils(this.arrayRecipeFilters)
+        if (this.arrayAppareils == null) {
+            this.arrayAppareils = data
+        }
+        this.arrayAppareilsFilters = data
+        this.view.DisplayAppareils(data);
+    }
+
+    ControlAppareilsFilter(str) {
+        const data = this.model.getAppareilsFilter(this.arrayAppareilsFilters, str)
+        this.view.DisplayAppareils(data);
+    }
+
     AddEventListenerForIngredients() {
-        this.arrayIngredients.forEach(element => {
+        this.arrayIngredientsFilters.forEach(element => {
             document?.getElementById(`tags_${element}`)?.addEventListener("click", () => {
                 let objElement = { type: "ingredients", name: element }
+                let arrayTagFilter = this.arrayBadge.filter((badge) => badge.name == objElement.name)
+                if (arrayTagFilter.length == 0) {
+                    this.arrayBadge.push(objElement);
+                }
+                this.view.DisplayBadge(this.arrayBadge)
+                this.AddEventListenerForBadge()
+            })
+
+        });
+    }
+
+    AddEventListenerForAppareils() {
+        this.arrayAppareilsFilters.forEach(element => {
+            document?.getElementById(`tags_${element}`)?.addEventListener("click", () => {
+                let objElement = { type: "appareils", name: element }
                 let arrayTagFilter = this.arrayBadge.filter((badge) => badge.name == objElement.name)
                 if (arrayTagFilter.length == 0) {
                     this.arrayBadge.push(objElement);
@@ -79,7 +114,7 @@ function init() {
     const search = document.getElementById("search")
     search.addEventListener("change", () => {
         if (search.value.length >= 3) {
-            controleur.ControllSearchFilter(search.value)
+            controleur.ControlSearchFilter(search.value)
         } else {
             controleur.ControlAllRecipe()
         }
@@ -92,6 +127,15 @@ function init() {
             controleur.ControlIngredientsFilter()
         }
     })
+    const input_appareils = document.getElementById("input_appareils")
+    input_appareils.addEventListener("change", () => {
+        if (input_appareils.value.length >= 3) {
+            controleur.ControlAppareilsFilter(input_ingredients.value)
+        } else {
+            controleur.ControlAppareilsFilter()
+        }
+    })
+    
 }
 
 init()

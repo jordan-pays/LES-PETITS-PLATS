@@ -31,6 +31,17 @@ class View {
         })
     }
 
+    DisplayAppareils(appareils) {
+        const container_appareils = document.getElementById("container_appareils");
+        container_appareils.textContent = "";
+        appareils.forEach(appareil => {
+            const container_appareil = document.createElement("li");
+            container_appareil.textContent = appareil;
+            container_appareil.setAttribute("id", `tags_${appareil}`)
+            container_appareils.append(container_appareil)
+        })
+    }
+
     DisplayBadge(arrayBadge) {
         const container_badge = document.getElementById("container_badge")
         container_badge.textContent= "";
@@ -39,7 +50,7 @@ class View {
             const textBadge = document.createElement("p");
             textBadge.textContent = element.name;
             badge.setAttribute("id", `badge_${element.name}`)
-            badge.setAttribute("class",`badge ${element.type == "ingredients" ? 'blue' : 'green'}`)
+            badge.setAttribute("class",`badge ${element.type == "ingredients" ? 'blue' : element.type == "ingredients" ? 'appareils' : 'red'}`)
             badge.appendChild(textBadge)
             container_badge.append(badge)
         });
