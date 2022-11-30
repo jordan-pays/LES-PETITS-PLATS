@@ -7,6 +7,8 @@ class Controleur {
         this.arrayIngredientsFilters = null;
         this.arrayAppareils = null;
         this.arrayAppareilsFilters = null;
+        this.arrayUstensiles = null;
+        this.arrayUstensilesFilters = null;
         this.arrayBadge = [];
         this.model = new Model()
         this.view = new View()
@@ -18,20 +20,20 @@ class Controleur {
         this.arrayRecipeFilters = data;
 
         this.view.DisplayRecipes(data)
-        this.ControlAllIngredients()
-        this.ControlAllAppareils()
-        this.AddEventListenerForIngredients();
-        this.AddEventListenerForAppareils()
+        this.ControlAllTags()
     }
 
     async ControlSearchFilter(str) {
         const data = await this.model.getSearchFilter(this.arrayRecipeFilters, str)
         this.arrayRecipeFilters = data;
         this.view.DisplayRecipes(data)
+        this.ControlAllTags()
+    }
+
+    ControlAllTags(){
         this.ControlAllIngredients()
         this.ControlAllAppareils()
-        this.AddEventListenerForIngredients();
-        this.AddEventListenerForAppareils()
+        this.ControlAllUstensiles()
     }
 
     ControlAllIngredients() {
@@ -41,11 +43,13 @@ class Controleur {
         }
         this.arrayIngredientsFilters = data
         this.view.DisplayIngredients(data);
+        this.AddEventListenerForAllTags(data,"ingredients");
     }
 
     ControlIngredientsFilter(str) {
         const data = this.model.getIngredientsFilter(this.arrayIngredientsFilters, str)
         this.view.DisplayIngredients(data);
+        this.AddEventListenerForAllTags(data,"ingredients");
     }
 
     ControlAllAppareils() {
@@ -55,32 +59,36 @@ class Controleur {
         }
         this.arrayAppareilsFilters = data
         this.view.DisplayAppareils(data);
+        this.AddEventListenerForAllTags(data,"appareils");
     }
 
     ControlAppareilsFilter(str) {
         const data = this.model.getAppareilsFilter(this.arrayAppareilsFilters, str)
         this.view.DisplayAppareils(data);
+        this.AddEventListenerForAllTags(data,"appareils");
     }
 
-    AddEventListenerForIngredients() {
-        this.arrayIngredientsFilters.forEach(element => {
-            document?.getElementById(`tags_${element}`)?.addEventListener("click", () => {
-                let objElement = { type: "ingredients", name: element }
-                let arrayTagFilter = this.arrayBadge.filter((badge) => badge.name == objElement.name)
-                if (arrayTagFilter.length == 0) {
-                    this.arrayBadge.push(objElement);
-                }
-                this.view.DisplayBadge(this.arrayBadge)
-                this.AddEventListenerForBadge()
-            })
-
-        });
+    ControlAllUstensiles() {
+        const data = this.model.getAllUstensiles(this.arrayRecipeFilters)
+        if (this.arrayUstensiles == null) {
+            this.arrayUstensiles = data
+        }
+        console.log(data)
+        this.arrayUstensilesFilters = data
+        this.view.DisplayUstensiles(data);
+        this.AddEventListenerForAllTags(data,"ustensiles");
     }
 
-    AddEventListenerForAppareils() {
-        this.arrayAppareilsFilters.forEach(element => {
+    ControlUstensilesFilter(str) {
+        const data = this.model.getUstensilesFilter(this.arrayUstensilesFilters, str)
+        this.view.DisplayUstensiles(data);
+        this.AddEventListenerForAllTags(data,"ustensiles");
+    }
+
+    AddEventListenerForAllTags(data,type) {
+        data.forEach(element => {
             document?.getElementById(`tags_${element}`)?.addEventListener("click", () => {
-                let objElement = { type: "appareils", name: element }
+                let objElement = { type: type, name: element }
                 let arrayTagFilter = this.arrayBadge.filter((badge) => badge.name == objElement.name)
                 if (arrayTagFilter.length == 0) {
                     this.arrayBadge.push(objElement);
@@ -130,9 +138,18 @@ function init() {
     const input_appareils = document.getElementById("input_appareils")
     input_appareils.addEventListener("change", () => {
         if (input_appareils.value.length >= 3) {
-            controleur.ControlAppareilsFilter(input_ingredients.value)
+            controleur.ControlAppareilsFilter(input_appareils.value)
         } else {
             controleur.ControlAppareilsFilter()
+        }
+    })
+
+    const input_ustensiles = document.getElementById("input_ustensiles")
+    input_ustensiles.addEventListener("change", () => {
+        if (input_ustensiles.value.length >= 3) {
+            controleur.ControlUstensilesFilter(input_ustensiles.value)
+        } else {
+            controleur.ControlUstensilesFilter()
         }
     })
     

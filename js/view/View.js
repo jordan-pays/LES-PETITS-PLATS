@@ -42,6 +42,17 @@ class View {
         })
     }
 
+    DisplayUstensiles(ustensiles){
+        const container_ustensiles = document.getElementById("container_ustensiles");
+        container_ustensiles.textContent = "";
+        ustensiles.forEach(ustensile => {
+            const container_ustensile = document.createElement("li");
+            container_ustensile.textContent = ustensile;
+            container_ustensile.setAttribute("id", `tags_${ustensile}`)
+            container_ustensiles.append(container_ustensile)
+        })
+    }
+
     DisplayBadge(arrayBadge) {
         const container_badge = document.getElementById("container_badge")
         container_badge.textContent= "";
@@ -50,7 +61,7 @@ class View {
             const textBadge = document.createElement("p");
             textBadge.textContent = element.name;
             badge.setAttribute("id", `badge_${element.name}`)
-            badge.setAttribute("class",`badge ${element.type == "ingredients" ? 'blue' : element.type == "ingredients" ? 'appareils' : 'red'}`)
+            badge.setAttribute("class",`badge ${element.type == "ingredients" ? 'blue' : element.type == "appareils" ? 'green' : 'red'}`)
             badge.appendChild(textBadge)
             container_badge.append(badge)
         });

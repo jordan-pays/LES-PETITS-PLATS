@@ -34,10 +34,19 @@ class Model {
 
     getAppareilsFilter(appareils,str){
         if(str!=undefined){
-            const filterAppareils = appareils.filter((appareil)=>appareil.includes(str.toLowerCase()))
+            const filterAppareils = appareils.filter((appareil)=>appareil.toLowerCase().includes(str.toLowerCase()))
             return filterAppareils
         }else{
             return appareils
+        }
+    }
+
+    getUstensilesFilter(ustensiles,str){
+        if(str!=undefined){
+            const filtersUtensiles = ustensiles.filter((ustensile)=>ustensile.toLowerCase().includes(str.toLowerCase()))
+            return filtersUtensiles
+        }else{
+            return ustensiles
         }
     }
 
@@ -58,9 +67,24 @@ class Model {
     getAllAppareils(recipes){
         const arr = [];
         recipes.forEach(recipe=>{
-            arr.push(recipe.appliance)
+            arr.push(recipe.appliance.toLowerCase())
         });
         const data = arr.filter((appareils, index) => arr.indexOf(appareils) === index);
+        data.sort((a, b) => {
+            return a.localeCompare(b);
+        })
+        return data
+        
+    }
+
+    getAllUstensiles(recipes){
+        const arr = [];
+        recipes.forEach(recipe=>{
+            recipe.ustensils.forEach(ustensil=>{
+                arr.push(ustensil.toLowerCase())
+            })
+        });
+        const data = arr.filter((ustensils, index) => arr.indexOf(ustensils) === index);
         data.sort((a, b) => {
             return a.localeCompare(b);
         })
