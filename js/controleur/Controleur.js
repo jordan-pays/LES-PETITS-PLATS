@@ -10,6 +10,7 @@ class Controleur {
         this.arrayUstensiles = null;
         this.arrayUstensilesFilters = null;
         this.arrayBadge = [];
+        this.searchText = '';
         this.model = new Model()
         this.view = new View()
     }
@@ -18,22 +19,25 @@ class Controleur {
         const data = await this.model.getAllRecipe()
         this.arrayAllRecipe = data;
         this.arrayRecipeFilters = data;
-
+        this.searchText = '';
         this.view.DisplayRecipes(data)
         this.ControlAllTags()
     }
 
-    async ControlSearchFilter(str) {
-        const data = await this.model.getSearchFilter(this.arrayRecipeFilters, str)
+    ControlSearchFilter(str) {
+        const data = this.model.getSearchFilter(this.arrayRecipeFilters, str)
+        this.searchText = str;
         this.arrayRecipeFilters = data;
         this.view.DisplayRecipes(data)
         this.ControlAllTags()
     }
 
-    ControlAllTags(){
-        this.ControlAllIngredients()
-        this.ControlAllAppareils()
-        this.ControlAllUstensiles()
+    ControlBadgeFilter(){
+        const data = this.model.getSearchFilter(this.arrayAllRecipe, this.searchText)
+        const reponse =  this.model.getBadgeFilter(data, this.arrayBadge)
+        this.arrayRecipeFilters = reponse;
+        this.view.DisplayRecipes(reponse)
+        this.ControlAllTags()
     }
 
     ControlAllIngredients() {
@@ -46,11 +50,7 @@ class Controleur {
         this.AddEventListenerForAllTags(data,"ingredients");
     }
 
-    ControlIngredientsFilter(str) {
-        const data = this.model.getIngredientsFilter(this.arrayIngredientsFilters, str)
-        this.view.DisplayIngredients(data);
-        this.AddEventListenerForAllTags(data,"ingredients");
-    }
+  
 
     ControlAllAppareils() {
         const data = this.model.getAllAppareils(this.arrayRecipeFilters)
@@ -62,23 +62,35 @@ class Controleur {
         this.AddEventListenerForAllTags(data,"appareils");
     }
 
+    ControlAllUstensiles() {
+        const data = this.model.getAllUstensiles(this.arrayRecipeFilters)
+        if (this.arrayUstensiles == null) {
+            this.arrayUstensiles = data
+        }
+        this.arrayUstensilesFilters = data
+        this.view.DisplayUstensiles(data);
+        this.AddEventListenerForAllTags(data,"ustensiles");
+    }
+
+    ControlAllTags(){
+        this.ControlAllIngredients()
+        this.ControlAllAppareils()
+        this.ControlAllUstensiles()
+    }
+
+    ControlIngredientsFilter(str) {
+        const data = this.model.getIngredientsFilter(this.arrayIngredientsFilters, str)
+        this.view.DisplayIngredients(data);
+        this.AddEventListenerForAllTags(data,"ingredients");
+    }
+
     ControlAppareilsFilter(str) {
         const data = this.model.getAppareilsFilter(this.arrayAppareilsFilters, str)
         this.view.DisplayAppareils(data);
         this.AddEventListenerForAllTags(data,"appareils");
     }
 
-    ControlAllUstensiles() {
-        const data = this.model.getAllUstensiles(this.arrayRecipeFilters)
-        if (this.arrayUstensiles == null) {
-            this.arrayUstensiles = data
-        }
-        console.log(data)
-        this.arrayUstensilesFilters = data
-        this.view.DisplayUstensiles(data);
-        this.AddEventListenerForAllTags(data,"ustensiles");
-    }
-
+  
     ControlUstensilesFilter(str) {
         const data = this.model.getUstensilesFilter(this.arrayUstensilesFilters, str)
         this.view.DisplayUstensiles(data);
@@ -93,6 +105,7 @@ class Controleur {
                 if (arrayTagFilter.length == 0) {
                     this.arrayBadge.push(objElement);
                 }
+                this.ControlBadgeFilter()
                 this.view.DisplayBadge(this.arrayBadge)
                 this.AddEventListenerForBadge()
             })
@@ -106,6 +119,7 @@ class Controleur {
                 document.getElementById(`badge_${element.name}`)?.addEventListener("click", () => {
                     let newArray = this.arrayBadge.filter((badge) => badge.name != element.name);
                     this.arrayBadge = newArray
+                    this.ControlBadgeFilter()
                     this.view.DisplayBadge(this.arrayBadge)
                     this.AddEventListenerForBadge()
                 })

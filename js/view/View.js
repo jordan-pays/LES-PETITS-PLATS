@@ -12,7 +12,14 @@ class View {
             container_info.setAttribute("class", "container_info");
             const titre = document.createElement("h2");
             titre.innerHTML = element.name;
+            const listingIngredients = document.createElement("ul")
+            element.ingredients.forEach((element)=>{
+                const showIngredient = document.createElement("li")
+                showIngredient.textContent = `${element.ingredient} : ${element.quantity}` 
+                listingIngredients.appendChild(showIngredient)
+            })
             container_info.append(titre)
+            container_info.append(listingIngredients)
             container_recipe.append(container_img)
             container_recipe.append(container_info)
             container_all_recipe.append(container_recipe)

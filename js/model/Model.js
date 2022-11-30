@@ -14,7 +14,7 @@ class Model {
         return data
     }
 
-    async getSearchFilter(recipes, str) {
+    getSearchFilter(recipes, str) {
         const filterRecipes = recipes.filter((recipe) => this.filterFunction(recipe, str))
         filterRecipes.sort((a, b) => {
             return a.name.localeCompare(b.name);
@@ -23,37 +23,45 @@ class Model {
         return filterRecipes
     }
 
-    getIngredientsFilter(ingredients,str) {
-        if(str!=undefined){
-            const filterIngredient = ingredients.filter((ingredient)=>ingredient.includes(str.toLowerCase()))
+    getBadgeFilter(recipes, badges) {
+        const filterRecipes = recipes.filter((recipe) => this.filterFunctionBadge(recipe, badges))
+        filterRecipes.sort((a, b) => {
+            return a.name.localeCompare(b.name);
+        })
+        return filterRecipes
+    }
+
+    getIngredientsFilter(ingredients, str) {
+        if (str != undefined) {
+            const filterIngredient = ingredients.filter((ingredient) => ingredient.includes(str.toLowerCase()))
             return filterIngredient
-        }else{
+        } else {
             return ingredients
         }
     }
 
-    getAppareilsFilter(appareils,str){
-        if(str!=undefined){
-            const filterAppareils = appareils.filter((appareil)=>appareil.toLowerCase().includes(str.toLowerCase()))
+    getAppareilsFilter(appareils, str) {
+        if (str != undefined) {
+            const filterAppareils = appareils.filter((appareil) => appareil.toLowerCase().includes(str.toLowerCase()))
             return filterAppareils
-        }else{
+        } else {
             return appareils
         }
     }
 
-    getUstensilesFilter(ustensiles,str){
-        if(str!=undefined){
-            const filtersUtensiles = ustensiles.filter((ustensile)=>ustensile.toLowerCase().includes(str.toLowerCase()))
+    getUstensilesFilter(ustensiles, str) {
+        if (str != undefined) {
+            const filtersUtensiles = ustensiles.filter((ustensile) => ustensile.toLowerCase().includes(str.toLowerCase()))
             return filtersUtensiles
-        }else{
+        } else {
             return ustensiles
         }
     }
 
-    getAllIngredients(recipes){
+    getAllIngredients(recipes) {
         const arr = [];
         recipes.forEach(recipe => {
-            recipe.ingredients.forEach(element=>{
+            recipe.ingredients.forEach(element => {
                 arr.push(element.ingredient.toLowerCase())
             })
         });
@@ -64,9 +72,9 @@ class Model {
         return data
     }
 
-    getAllAppareils(recipes){
+    getAllAppareils(recipes) {
         const arr = [];
-        recipes.forEach(recipe=>{
+        recipes.forEach(recipe => {
             arr.push(recipe.appliance.toLowerCase())
         });
         const data = arr.filter((appareils, index) => arr.indexOf(appareils) === index);
@@ -74,13 +82,13 @@ class Model {
             return a.localeCompare(b);
         })
         return data
-        
+
     }
 
-    getAllUstensiles(recipes){
+    getAllUstensiles(recipes) {
         const arr = [];
-        recipes.forEach(recipe=>{
-            recipe.ustensils.forEach(ustensil=>{
+        recipes.forEach(recipe => {
+            recipe.ustensils.forEach(ustensil => {
                 arr.push(ustensil.toLowerCase())
             })
         });
@@ -107,6 +115,51 @@ class Model {
             }
             return estTrouve
         }
+    }
+
+    filterFunctionBadge(recipe, badges) {
+        let i = 0;
+        let estTrouve = true;
+        while (i < badges.length && estTrouve) {
+            let badge = badges[i]
+            switch (badge.type) {
+                case "ingredients":
+                    let j =0;
+                    let estTrouveBis = false
+                    while (j < recipe.ingredients.length && !estTrouveBis) {
+                        if (recipe.ingredients[j].ingredient.toLowerCase() == badge.name) {
+                            estTrouveBis = true
+                        }
+                        j++;
+                    }
+                    if(!estTrouveBis){
+                        estTrouve = false
+                    }
+                    break;
+                case "appareils":
+                    if(recipe.appliance.toLowerCase() != badge.name){
+                        estTrouve = false
+                    }
+                    break;
+                case "ustensiles":
+                    let k =0;
+                    let estUstensiles = false;
+                    while (k< recipe.ustensils.length && !estUstensiles) {
+                        if (recipe.ustensils[k].toLowerCase() == badge.name) {
+                            estUstensiles = true 
+                        }
+                        k++;
+                    }
+                    if(!estUstensiles){
+                        estTrouve = false
+                    }
+                    break;
+                default:
+                    break;
+            }
+            i++
+        }
+        return estTrouve
     }
 
 }
