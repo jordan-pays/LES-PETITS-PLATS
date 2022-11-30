@@ -1,11 +1,11 @@
 class Controleur {
 
-    constructor (){
+    constructor() {
         this.arrayAllRecipe = null;
         this.arrayRecipeFilters = null;
         this.arrayIngredients = null;
         this.arrayIngredientsFilters = null;
-        this.arrayBadgeIngredients = [];
+        this.arrayBadge = [];
         this.model = new Model()
         this.view = new View()
     }
@@ -14,77 +14,81 @@ class Controleur {
         const data = await this.model.getAllRecipe()
         this.arrayAllRecipe = data;
         this.arrayRecipeFilters = data;
+
         this.view.DisplayRecipes(data)
         this.ControlAllIngredients()
+        this.AddEventListenerForIngredients();
     }
 
-    async ControllSearchFilter(str){
-        const data = await this.model.getSearchFilter(this.arrayRecipeFilters,str)
+    async ControllSearchFilter(str) {
+        const data = await this.model.getSearchFilter(this.arrayRecipeFilters, str)
         this.arrayRecipeFilters = data;
         this.view.DisplayRecipes(data)
         this.ControlAllIngredients()
+        this.AddEventListenerForIngredients();
     }
 
-    ControlAllIngredients(){
+    ControlAllIngredients() {
         const data = this.model.getAllIngredients(this.arrayRecipeFilters)
-        if(this.arrayIngredients == null){
-            this.arrayIngredients=data
+        if (this.arrayIngredients == null) {
+            this.arrayIngredients = data
         }
         this.arrayIngredientsFilters = data
-        this.ControlViewDisplay(data,"ingredients")
+        this.view.DisplayIngredients(data);
     }
 
-    ControlIngredientsFilter(str){
-        const data = this.model.getIngredientsFilter(this.arrayIngredientsFilters,str)
-        this.ControlViewDisplay(data, "ingredients")
+    ControlIngredientsFilter(str) {
+        const data = this.model.getIngredientsFilter(this.arrayIngredientsFilters, str)
+        this.view.DisplayIngredients(data);
     }
 
-    ControlCreateAdEventListener(data,arrayChange){
-        data.forEach(element => {
-            const dataElement = document.getElementById(element)
-            dataElement.addEventListener("click",()=>{
-                const index = arrayChange.indexOf(element)
-                if(index == -1){
-                    arrayChange.push(element)
-                }else{
-                    arrayChange.splice(index,1)
+    AddEventListenerForIngredients() {
+        this.arrayIngredients.forEach(element => {
+            document?.getElementById(`tags_${element}`)?.addEventListener("click", () => {
+                let objElement = { type: "ingredients", name: element }
+                let arrayTagFilter = this.arrayBadge.filter((badge) => badge.name == objElement.name)
+                if (arrayTagFilter.length == 0) {
+                    this.arrayBadge.push(objElement);
                 }
-                console.log(this.arrayBadgeIngredients)
+                this.view.DisplayBadge(this.arrayBadge)
+                this.AddEventListenerForBadge()
             })
+
         });
     }
 
-    ControlViewDisplay(data,type){
-        switch (type) {
-            case "ingredients":
-                this.view.DisplayIngredients(data);
-                this.ControlCreateAdEventListener(data,this.arrayBadgeIngredients)
-                break;
-        
-            default:
-            break;
+    AddEventListenerForBadge(){
+        if(this.arrayBadge.length > 0){
+            this.arrayBadge.forEach(element => {
+                document.getElementById(`badge_${element.name}`)?.addEventListener("click", () => {
+                    let newArray = this.arrayBadge.filter((badge) => badge.name != element.name);
+                    this.arrayBadge = newArray
+                    this.view.DisplayBadge(this.arrayBadge)
+                    this.AddEventListenerForBadge()
+                })
+            });
         }
+
     }
-    
-    
+
 }
 
-function init (){
+function init() {
     const controleur = new Controleur()
     controleur.ControlAllRecipe()
     const search = document.getElementById("search")
-    search.addEventListener("change",()=>{
-        if(search.value.length >= 3){
+    search.addEventListener("change", () => {
+        if (search.value.length >= 3) {
             controleur.ControllSearchFilter(search.value)
-        }else{
+        } else {
             controleur.ControlAllRecipe()
         }
     })
     const input_ingredients = document.getElementById("input_ingredients")
-    input_ingredients.addEventListener("change",()=>{
-        if(input_ingredients.value.length >= 3){
+    input_ingredients.addEventListener("change", () => {
+        if (input_ingredients.value.length >= 3) {
             controleur.ControlIngredientsFilter(input_ingredients.value)
-        }else{
+        } else {
             controleur.ControlIngredientsFilter()
         }
     })

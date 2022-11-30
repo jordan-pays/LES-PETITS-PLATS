@@ -6,34 +6,73 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="https://kit.fontawesome.com/9529e48c4d.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="./css/reset.css" /> -->
   <link rel="stylesheet" href="./css/main.css" />
   <title>Les petits plats</title>
 </head>
 
 <body>
   <input type="text" class="input_search" id="search" placeholder="Rechercher une recette">
-    <div class="container_button">
-      <div class="relative">
-        <button id="button_ingredients"  class="button_filter ingredients_filter">
+  <div class="container_badge" id="container_badge">
+
+  </div>
+  <div class="container_button">
+    <div class="relative">
+      <button id="button_ingredients" class="button_filter blue">
         Ingredients <i class="fa-solid fa-chevron-down"></i>
-        </button>
-        <div class="container_info_filter container_info--blue" id="container_info_ingredients"  >
-          <div class="container_input_info">
-            <input type="text" class="input_info" placeholder="Rechercher un ingrédient" name="input_ingredients" id="input_ingredients" />
-            <span id="chevron_ingredients" class="chevron"><i class="fa-solid fa-chevron-up"></i></span>
-          </div>
-         
-          <ul class="container_all_info" id="container_ingredients">
-
-          </ul>
+      </button>
+      <div class="container_info_filter blue" id="container_info_ingredients">
+        <div class="container_input_info">
+          <input type="text" class="input_info" placeholder="Rechercher un ingrédient" name="input_ingredients"
+            id="input_ingredients" />
+          <span id="chevron_ingredients" class="chevron"><i class="fa-solid fa-chevron-up"></i></span>
         </div>
-       
-    </div>    
-    </div>
-    <div id="container_all_recipe" class="row" style="gap: 50px;">
+
+        <ul class="container_all_info" id="container_ingredients">
+
+        </ul>
+      </div>
 
     </div>
-    <script src="./js/outils.js"></script>
+    <div class="relative">
+      <button id="button_appareils" class="button_filter green">
+        Appareils <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="container_info_filter green" id="container_info_appareils">
+        <div class="container_input_info">
+          <input type="text" class="input_info" placeholder="Rechercher un ingrédient" name="input_appareils"
+            id="input_appareils" />
+          <span id="chevron_appareils" class="chevron"><i class="fa-solid fa-chevron-up"></i></span>
+        </div>
+
+        <ul class="container_all_info" id="container_appareils">
+
+        </ul>
+      </div>
+
+    </div>
+    <div class="relative">
+      <button id="button_ingredients" class="button_filter ingredients_filter">
+        Ingredients <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="container_info_filter container_info--blue" id="container_info_ingredients">
+        <div class="container_input_info">
+          <input type="text" class="input_info" placeholder="Rechercher un ingrédient" name="input_ingredients"
+            id="input_ingredients" />
+          <span id="chevron_ingredients" class="chevron"><i class="fa-solid fa-chevron-up"></i></span>
+        </div>
+
+        <ul class="container_all_info" id="container_ingredients">
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div id="container_all_recipe" class="row" style="gap: 50px;">
+
+  </div>
+  <script src="./js/outils.js"></script>
   <script src="./js/view/View.js"></script>
   <script src="./js/model/Model.js"></script>
   <script src="./js/controleur/Controleur.js"></script>
