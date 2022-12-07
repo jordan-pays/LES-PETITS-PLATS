@@ -1,5 +1,5 @@
 body {
-    padding:42px 100px;
+    padding: 42px 100px;
 }
 
 .container_recipe {
@@ -7,15 +7,18 @@ body {
     border-radius: 5px;
     width: 30.3%;
     height: 364px;
+    display: flex;
+    flex-direction: column;
 }
 
 .container_img {
     background: #C7BEBE;
-border-radius: 5px 5px 0px 0px;
-height: 50%;
+    border-radius: 5px 5px 0px 0px;
+    display: flex;
+    flex: 1;
 }
 
-.row{
+.row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -27,16 +30,20 @@ height: 50%;
 
 .container_button {
     display: flex;
-    align-items: center;
-    gap: 20px;
     flex: 1;
+    position: absolute;
+    width: 87%;
+    gap: 20px;
 }
 
-.button_filter:active, .button_filter:focus, .button_filter:hover,.badge:hover {
+.button_filter:active,
+.button_filter:focus,
+.button_filter:hover,
+.badge:hover {
     cursor: pointer;
 }
 
-.button_filter{
+.button_filter {
     width: 170px;
     height: 69px;
     border-radius: 5px;
@@ -57,25 +64,20 @@ height: 50%;
 }
 
 .green {
-  background-color: #68D9A4;
+    background-color: #68D9A4;
 }
 
 .red {
-background-color: #ED6454;
+    background-color: #ED6454;
 }
 
-.relative {
-    position: relative;
-    margin-top: 100px;
-}
-
-.input_search::placeholder{
-    color : rgba(0, 0, 0, 0.25);
+.input_search::placeholder {
+    color: rgba(0, 0, 0, 0.25);
     size: 18px;
 }
 
-.input_search{
-    width: 100%;     
+.input_search {
+    width: 100%;
     height: 69px;
     color: black;
     size: 18px;
@@ -85,18 +87,27 @@ background-color: #ED6454;
     border: none;
 }
 
+.relative {
+    position: relative;
+    display: flex;
+    min-width: 148px;
+    max-width:50%;
+    flex-direction: column;
+}
+
 .container_info_filter {
     display: none;
-    position: absolute;
+    position: relative;
     z-index: 25;
     /* padding: 22px; */
     border-radius: 5px;
-    top:0px;
-    max-width: 50%;
-    min-width: 148px;
+    top: -70px;
+    /* left: -155px; */
+    width: 100%;
+    /* min-width: 148px; */
 }
 
-.container_all_info{
+.container_all_info {
     flex-wrap: wrap;
     flex-direction: row;
     flex: 1;
@@ -104,7 +115,7 @@ background-color: #ED6454;
     align-items: center;
     justify-content: space-between;
     padding: 0px;
-    margin: 0px;
+    /* margin: 0px; */
     margin: 0px 22px;
 }
 
@@ -114,7 +125,7 @@ background-color: #ED6454;
     font-weight: 700;
 }
 
-.chevron:hover{
+.chevron:hover {
     cursor: pointer;
 }
 
@@ -122,20 +133,21 @@ background-color: #ED6454;
     display: flex;
     /* max-width:100%; */
     min-width: 142px;
+    width: auto;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     margin: 22px 22px 10px 22px;
 }
 
-.container_all_info li:hover{
+.container_all_info li:hover {
     cursor: pointer;
 }
 
 .container_all_info li {
     font-size: 18px;
     color: white;
-    width: 32.5%;
+    width: 32%;
     list-style-type: none;
     text-align: left;
     margin: 5px 2px;
@@ -146,18 +158,20 @@ background-color: #ED6454;
     color: rgba(255, 2555, 255, 0.5);
     font-size: 18px;
 }
+
 .input_info:focus-visible {
-    border : none
+    border: none
 }
+
 .input_info {
     height: 50px;
-    width:100%;
+    width: 100%;
     font-weight: 700;
     color: white;
     font-size: 18px;
     background-color: transparent;
-    padding:0px 10px ;
-    border : none
+    padding: 0px 10px;
+    border: none
 }
 
 .container_badge {
@@ -168,7 +182,7 @@ background-color: #ED6454;
     gap: 25px;
 }
 
-.badge{
+.badge {
     display: flex;
     padding: 0px 20px;
     align-items: center;
@@ -185,4 +199,85 @@ background-color: #ED6454;
     font-family: "Font Awesome 5 Free";
     font-weight: 400;
     margin-left: 13px;
+}
+
+
+.container_info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.container_info h2 {
+    margin: 0px;
+    font-weight: 400;
+    font-size: 18px;
+
+    display: flex;
+    flex: 3;
+}
+
+.container_info h3::before {
+    content: "\f017";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    margin-right: 7px;
+}
+
+
+.container_info h3 {
+    display: flex;
+    flex: 1;
+    margin: 0px;
+    font-weight: 700;
+    font-size: 18px;
+
+    justify-content: flex-end;
+}
+
+.container_description li {
+    font-weight: 400;
+    font-size: 12px;
+
+    list-style-type: none;
+}
+
+.titleIngredient {
+    font-weight: 700;
+}
+
+.container_description ul {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.container_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.container_description {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.container_description p {
+    flex: 1;
+    font-weight: 400;
+    font-size: 12px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient:vertical;
+    max-height: 68px;
+    white-space: normal;
+    margin: 0px;
 }

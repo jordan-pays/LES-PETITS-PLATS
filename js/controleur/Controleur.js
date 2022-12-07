@@ -25,11 +25,18 @@ class Controleur {
     }
 
     ControlSearchFilter(str) {
-        const data = this.model.getSearchFilter(this.arrayRecipeFilters, str)
         this.searchText = str;
+        let data = [];
+        if (str.length >= 3) {
+            data  = this.model.getSearchFilter(this.arrayRecipeFilters, str)
+            
+        } else {
+            data =  this.model.getBadgeFilter(this.arrayAllRecipe, this.arrayBadge)
+        }
         this.arrayRecipeFilters = data;
-        this.view.DisplayRecipes(data)
-        this.ControlAllTags()
+            this.view.DisplayRecipes(data)
+            this.ControlAllTags()
+        
     }
 
     ControlBadgeFilter(){
@@ -135,11 +142,7 @@ function init() {
     controleur.ControlAllRecipe()
     const search = document.getElementById("search")
     search.addEventListener("change", () => {
-        if (search.value.length >= 3) {
-            controleur.ControlSearchFilter(search.value)
-        } else {
-            controleur.ControlAllRecipe()
-        }
+        controleur.ControlSearchFilter(search.value)
     })
     const input_ingredients = document.getElementById("input_ingredients")
     input_ingredients.addEventListener("change", () => {
