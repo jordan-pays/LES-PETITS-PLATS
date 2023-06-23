@@ -28,8 +28,8 @@ class Controleur {
         this.searchText = str;
         let data = [];
         if (str.length >= 3) {
-            // data  = this.model.getSearchFilter(this.arrayRecipeFilters, str)
-            data  = this.model.getSearchFor(this.arrayRecipeFilters, str)
+            data  = this.model.getSearchFilter(this.arrayRecipeFilters, str)
+            // data  = this.model.getSearchFor(this.arrayRecipeFilters, str)
         } else {
             data =  this.model.getBadgeFilter(this.arrayAllRecipe, this.arrayBadge)
         }
