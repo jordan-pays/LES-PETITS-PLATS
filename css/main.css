@@ -1,5 +1,22 @@
 body {
     padding: 42px 100px;
+    font-family: 'Lato', sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'DM Sans';
+    margin: 0px;
+    font-weight: 700;
+    font-size: 36px;
+    color: #D04F4F;
 }
 
 .container_recipe {
@@ -18,14 +35,16 @@ body {
     flex: 1;
 }
 
+.relative_bis {
+    position: relative;
+    margin: 20px 0px;
+    height: 70px;
+}
+
 .row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-#container_all_recipe {
-    margin-top: 60px;
 }
 
 .container_button {
@@ -34,6 +53,7 @@ body {
     position: absolute;
     width: 87%;
     gap: 20px;
+    top: 0px;
 }
 
 .button_filter:active,
@@ -74,6 +94,19 @@ body {
 .input_search::placeholder {
     color: rgba(0, 0, 0, 0.25);
     size: 18px;
+}
+
+.container_all_search{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.icon_search {
+    position: absolute;
+    font-size: 40px;
+    right: 15px;
 }
 
 .input_search {

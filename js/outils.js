@@ -38,18 +38,6 @@ chevron_ustensiles.addEventListener("click",()=>{
   container_info_ustensiles.setAttribute("style","display:none")
 })
 
-// var input_ingredients = document.getElementById('input_ingredients'); // get the input element
-// input_ingredients.addEventListener('change', resizeInput); // bind the "resizeInput" callback on "input" event
-// resizeInput.call(input_ingredients); // immediately call the function
-
-// var input_appareils = document.getElementById('input_appareils'); 
-// input_appareils.addEventListener('change', resizeInput);
-// resizeInput.call(input_appareils); 
-
-// var input_ustensiles = document.getElementById('input_ustensiles'); 
-// input_ustensiles.addEventListener('change', resizeInput);
-// resizeInput.call(input_ustensiles); 
-
 function resizeInput() {
   this.style.width = (this.value.length <= 3 ? 120 : this.value.length + 4)+ "ch";
 }

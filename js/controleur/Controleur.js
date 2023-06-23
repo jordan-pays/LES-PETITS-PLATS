@@ -28,8 +28,8 @@ class Controleur {
         this.searchText = str;
         let data = [];
         if (str.length >= 3) {
-            data  = this.model.getSearchFilter(this.arrayRecipeFilters, str)
-            
+            // data  = this.model.getSearchFilter(this.arrayRecipeFilters, str)
+            data  = this.model.getSearchFor(this.arrayRecipeFilters, str)
         } else {
             data =  this.model.getBadgeFilter(this.arrayAllRecipe, this.arrayBadge)
         }
@@ -146,7 +146,7 @@ function init() {
     })
     const input_ingredients = document.getElementById("input_ingredients")
     input_ingredients.addEventListener("change", () => {
-        if (input_ingredients.value.length >= 3) {
+        if (input_ingredients.value.length > 0) {
             controleur.ControlIngredientsFilter(input_ingredients.value)
         } else {
             controleur.ControlIngredientsFilter()
@@ -154,7 +154,7 @@ function init() {
     })
     const input_appareils = document.getElementById("input_appareils")
     input_appareils.addEventListener("change", () => {
-        if (input_appareils.value.length >= 3) {
+        if (input_appareils.value.length > 0) {
             controleur.ControlAppareilsFilter(input_appareils.value)
         } else {
             controleur.ControlAppareilsFilter()
@@ -163,7 +163,7 @@ function init() {
 
     const input_ustensiles = document.getElementById("input_ustensiles")
     input_ustensiles.addEventListener("change", () => {
-        if (input_ustensiles.value.length >= 3) {
+        if (input_ustensiles.value.length > 0) {
             controleur.ControlUstensilesFilter(input_ustensiles.value)
         } else {
             controleur.ControlUstensilesFilter()

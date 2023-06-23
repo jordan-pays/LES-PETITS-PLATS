@@ -15,12 +15,22 @@ class Model {
     }
 
     getSearchFilter(recipes, str) {
-        const filterRecipes = recipes.filter((recipe) => this.filterFunction(recipe, str))
+        const filterRecipes = recipes.filter((recipe) => this.filterFunction(recipe, str));
         filterRecipes.sort((a, b) => {
             return a.name.localeCompare(b.name);
-        })
+        });
+        return filterRecipes;
+    }
 
-        return filterRecipes
+    getSearchFor(recipes, str){
+        const recipeTrouve = [];
+        for(let i=0;i<recipes.length;i++){
+           let estTrouve = this.filterFunction(recipes[i],str);
+           if(estTrouve){
+            recipeTrouve.push(recipes[i]);
+           }
+        }
+        return recipeTrouve;
     }
 
     getBadgeFilter(recipes, badges) {

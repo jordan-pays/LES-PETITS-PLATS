@@ -9,13 +9,26 @@
   <!-- <link rel="stylesheet" href="./css/reset.css" /> -->
   <link rel="stylesheet" href="./css/main.css" />
   <title>Les petits plats</title>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'>
 </head>
 
 <body>
-  <input type="text" class="input_search" id="search" placeholder="Rechercher une recette">
+  <header>
+    <img src="./assets/Vector.png" alt="Logo du site les petits plats"/>
+    <h1>Les petits plats</h1>
+  </header>
+  <div class="container_all_search">
+    <input type="text" class="input_search" id="search" placeholder="Rechercher une recette">
+    <div class="icon_search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+  </div>
+  
   <div class="container_badge" id="container_badge">
 
   </div>
+  <div class="relative_bis">
   <div class="container_button">
     <div class="relative">
       <button id="button_ingredients" class="button_filter blue">
@@ -69,6 +82,7 @@
 
     </div>
   </div>
+</div>
   <div id="container_all_recipe" class="row" style="gap: 50px;">
 
   </div>
